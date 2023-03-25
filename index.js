@@ -8,19 +8,22 @@ connectDB(); //connecting with mongo
 const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
 
+//Router files
+const auth = require("./routes/auth")
+
 //swager options
 const options = {
   definition: {
-    openapi: "1.0.0",
+    openapi: "3.0.0",
     info: {
       title: "To Do app",
-      version: "1.0.0",
+      version: "3.0.0",
       description: "A To Do web applcation",
     },
 
     servers: [
       {
-        url: "http://localhost:3000/api/v1",
+        url: "http://localhost:3001/api/v1",
         description: "Local server",
       },
     ],
@@ -45,9 +48,18 @@ const options = {
 
 const specs = swaggerJsDoc(options);
 
+// For accepting post form data
+const bodyParser = require("express").json;
+
+//documentation path
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
-const port = 3000;
+app.use(bodyParser())
+
+//load routes
+app.use("/api/v1/auth", auth);
+
+const port = 3001;
 
 app.get("api/v1/", function (req, res) {
   res.send("Welcome to ToDo application");
