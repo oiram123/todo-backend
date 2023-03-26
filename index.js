@@ -12,10 +12,11 @@ const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
 
 //Load env variables
-dotenv.config({path: "./config/config.env"})
+dotenv.config({ path: "./config/config.env" });
 
 //Router files
-const auth = require("./routes/auth")
+const auth = require("./routes/auth");
+const todo = require("./routes/todo");
 
 //swager options
 const options = {
@@ -64,12 +65,12 @@ const bodyParser = require("express").json;
 //documentation path
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
-app.use(bodyParser())
+app.use(bodyParser());
 app.use(cors());
-
 
 //load routes
 app.use("/api/v1/auth", auth);
+app.use("/api/v1/todo", todo);
 
 const port = 3001;
 
@@ -78,4 +79,3 @@ app.get("api/v1/", function (req, res) {
 });
 
 app.listen(port, console.log(`Server running in port ${port}`));
-
