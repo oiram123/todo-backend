@@ -1,5 +1,8 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
+const dotenv = require("dotenv");
+const morgan = require("morgan");
 const connectDB = require("./config/db");
 
 connectDB(); //connecting with mongo
@@ -7,6 +10,9 @@ connectDB(); //connecting with mongo
 //Swagger documentation
 const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
+
+//Load env variables
+dotenv.config({path: "./config/config.env"})
 
 //Router files
 const auth = require("./routes/auth")
@@ -48,6 +54,10 @@ const options = {
 
 const specs = swaggerJsDoc(options);
 
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
+
 // For accepting post form data
 const bodyParser = require("express").json;
 
@@ -55,6 +65,8 @@ const bodyParser = require("express").json;
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 app.use(bodyParser())
+app.use(cors());
+
 
 //load routes
 app.use("/api/v1/auth", auth);

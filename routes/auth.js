@@ -1,5 +1,5 @@
 const express = require("express")
-const {register} = require("../controllers/auth")
+const {register, login} = require("../controllers/auth")
 
 const router = express.Router()
 
@@ -58,6 +58,29 @@ const router = express.Router()
  *         description: Some server error
  */
 router.post("/register", register);
+
+/**
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     summary: login user with his phone number
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/User'
+ *
+ *     responses:
+ *       200:
+ *         description: login user
+ *       404:
+ *         description: user is already regestered
+ *       500:
+ *         description: Some server error
+ */
+router.post("/login", login);
 
 
 module.exports = router;
