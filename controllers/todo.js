@@ -2,19 +2,15 @@ const asyncHandler = require("../middleware/async");
 const Todo = require("../models/todo");
 
 exports.createTodo = asyncHandler(async (req, res, next) => {
-    console.log('called')
   const { title, content, userId } = req.body;
-
-  console.log(title, content, userId)
 
   try {
     const newTodo = await Todo.create({
       title,
       content,
+      user: userId,
     });
     
-    console.log('new todo', newTodo)
-
     res.status(200).json({
       success: true,
       data: newTodo,
@@ -29,7 +25,9 @@ exports.createTodo = asyncHandler(async (req, res, next) => {
 });
 
 exports.getAllTodo = asyncHandler(async (req, res, next) => {
-  const userId = req.params.id;
+  const userId = req.params.userId;
+
+  console.log('user', userId)
 
   try {
     const getTodo = await Todo.find({ user: userId });
@@ -48,7 +46,7 @@ exports.getAllTodo = asyncHandler(async (req, res, next) => {
 });
 
 exports.getOneTodo = asyncHandler(async (req, res, next) => {
-  const todoID = req.params.id;
+  const todoID = req.params.todoID;
 
   try {
     const findOneTodo = await Todo.findOne({
@@ -61,6 +59,11 @@ exports.getOneTodo = asyncHandler(async (req, res, next) => {
         error: "Todo not found",
       });
     }
+
+    res.status(200).json({
+      success: true,
+      data: findOneTodo
+    })
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -71,7 +74,7 @@ exports.getOneTodo = asyncHandler(async (req, res, next) => {
 });
 
 exports.deleteTodo = asyncHandler(async (req, res, next) => {
-  const todoID = req.params.id;
+  const todoID = req.params.todoID;
 
   try {
     const deleteTodo = await Todo.findOneAndDelete({
@@ -98,8 +101,7 @@ exports.deleteTodo = asyncHandler(async (req, res, next) => {
 });
 
 exports.updateTodo = asyncHandler(async (req, res, next) => {
-  const todoID = req.params.id;
-  const { title, content } = req.body;
+  const { title, content, todoID } = req.body;
 
   try {
     const updateTodo = await Todo.findOneAndUpdate(

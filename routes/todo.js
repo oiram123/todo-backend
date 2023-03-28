@@ -1,5 +1,11 @@
 const express = require("express");
-const { createTodo } = require("../controllers/todo");
+const {
+  createTodo,
+  getAllTodo,
+  getOneTodo,
+  deleteTodo,
+  updateTodo,
+} = require("../controllers/todo");
 
 const router = express.Router();
 
@@ -65,5 +71,92 @@ const router = express.Router();
  *         description: Some server error
  */
 router.post("/createTodo", createTodo);
+
+/**
+ * @swagger
+ * /todo/getAllTodo/{userId}:
+ *   get:
+ *     summary: Getting user profile information
+ *     tags: [Todo]
+ *     parameters:
+ *       - name: userId
+ *         description: User Profile Information
+ *         type: string
+ *         in: path
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: The user profile has been recivied
+ *       500:
+ *         description: Some server error
+ */
+
+router.get("/getAllTodo/:userId", getAllTodo);
+
+/**
+ * @swagger
+ * /todo/getOneTodo/{todoID}:
+ *   get:
+ *     summary: Getting user profile information
+ *     tags: [Todo]
+ *     parameters:
+ *       - name: todoID
+ *         description: User Profile Information
+ *         type: string
+ *         in: path
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: The user profile has been recivied
+ *       500:
+ *         description: Some server error
+ */
+
+router.get("/getOneTodo/:todoID", getOneTodo);
+
+/**
+ * @swagger
+ * /todo/updateTodo:
+ *   patch:
+ *     summary: register new user with his phone number
+ *     tags: [Todo]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Todo'
+ *
+ *     responses:
+ *       200:
+ *         description: register new user
+ *       404:
+ *         description: user is already regestered
+ *       500:
+ *         description: Some server error
+ */
+
+router.patch("/updateTodo", updateTodo);
+
+/**
+ * @swagger
+ * /todo/deleteTodo/{todoID}:
+ *   delete:
+ *     summary: Getting user profile information
+ *     tags: [Todo]
+ *     parameters:
+ *       - name: todoID
+ *         description: User Profile Information
+ *         type: string
+ *         in: path
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: The user profile has been recivied
+ *       500:
+ *         description: Some server error
+ */
+
+router.delete("/deleteTodo/:todoID", deleteTodo);
 
 module.exports = router;
