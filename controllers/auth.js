@@ -1,6 +1,5 @@
 const asyncHandler = require("../middleware/async");
-const User = require("../models/User");
-const ErrorResponse = require("../utils/errorResponse");
+const User = require('../models/user')
 const bcrypt = require("bcryptjs");
 
 exports.register = asyncHandler(async (req, res, next) => {
