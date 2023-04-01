@@ -10,7 +10,7 @@ exports.createTodo = asyncHandler(async (req, res, next) => {
       content,
       user: userId,
     });
-    
+
     res.status(200).json({
       success: true,
       data: newTodo,
@@ -27,7 +27,7 @@ exports.createTodo = asyncHandler(async (req, res, next) => {
 exports.getAllTodo = asyncHandler(async (req, res, next) => {
   const userId = req.params.userId;
 
-  console.log('user', userId)
+  console.log("user", userId);
 
   try {
     const getTodo = await Todo.find({ user: userId });
@@ -62,8 +62,8 @@ exports.getOneTodo = asyncHandler(async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      data: findOneTodo
-    })
+      data: findOneTodo,
+    });
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -123,6 +123,39 @@ exports.updateTodo = asyncHandler(async (req, res, next) => {
       msg: "Successfully updated",
     });
   } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error,
+      msg: "Server error",
+    });
+  }
+});
+
+exports.updateStatusTodo = asyncHandler(async (req, res, next) => {
+  const { taskId, status } = req.body;
+  console.log(taskId, status);
+
+  try {
+    const updateStatus = await Todo.findOneAndUpdate(
+      { _id: taskId },
+      { status: status },
+      { new: true }
+    );
+
+    if (!updateStatus) {
+      return res.status(404).json({
+        success: false,
+        msg: "Todo not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: updateStatus,
+      msg: "Todo status updated.",
+    });
+  } catch (error) {
+    console.log(error);
     res.status(500).json({
       success: false,
       error: error,
