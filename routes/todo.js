@@ -5,6 +5,7 @@ const {
   getOneTodo,
   deleteTodo,
   updateTodo,
+  updateStatusTodo,
 } = require("../controllers/todo");
 
 const router = express.Router();
@@ -158,5 +159,28 @@ router.patch("/updateTodo", updateTodo);
  */
 
 router.delete("/deleteTodo/:todoID", deleteTodo);
+
+/**
+ * @swagger
+ * /todo/updateStatusTodo:
+ *   post:
+ *     summary: register new user with his phone number
+ *     tags: [Todo]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Todo'
+ *
+ *     responses:
+ *       200:
+ *         description: register new user
+ *       404:
+ *         description: user is already regestered
+ *       500:
+ *         description: Some server error
+ */
+router.post("/updateStatusTodo", updateStatusTodo);
 
 module.exports = router;
