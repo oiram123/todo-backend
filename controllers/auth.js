@@ -1,5 +1,5 @@
 const asyncHandler = require("../middleware/async");
-const User = require('../models/user')
+const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 
 exports.register = asyncHandler(async (req, res, next) => {
@@ -23,9 +23,14 @@ exports.register = asyncHandler(async (req, res, next) => {
     password: hashedPassword,
   });
 
+  const userId = user._id;
+
+  console.log(userId);
+
   res.status(200, "The user has been registred").json({
     success: true,
     message: "User registred",
+    userId: userId,
   });
 });
 
