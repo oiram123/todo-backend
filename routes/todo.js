@@ -162,8 +162,8 @@ router.delete("/deleteTodo/:todoID", deleteTodo);
 
 /**
  * @swagger
- * /todo/updateStatusTodo:
- *   post:
+ * /todo/updateStatusTodo/{taskId}:
+ *   patch:
  *     summary: register new user with his phone number
  *     tags: [Todo]
  *     requestBody:
@@ -181,6 +181,6 @@ router.delete("/deleteTodo/:todoID", deleteTodo);
  *       500:
  *         description: Some server error
  */
-router.post("/updateStatusTodo", updateStatusTodo);
+router.patch("/updateStatusTodo/:taskId", updateStatusTodo);
 
 module.exports = router;
