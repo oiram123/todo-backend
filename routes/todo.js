@@ -24,16 +24,16 @@ const router = express.Router();
  *           description: The auto-generated id of the user
  *         title:
  *           type: string
- *           description: user phone number
+ *           description: task title
  *         content:
  *           type: string
- *           description: user full name
+ *           description: task content
  *         status:
  *           type: string
- *           description: user full name
+ *           description: task status
  *         user:
  *           type: string
- *           description: user full name
+ *           description: the user that has the task
  *
  *       example:
  *         title: Go to work
@@ -47,14 +47,14 @@ const router = express.Router();
  * @swagger
  * tags:
  *   name: Todo
- *   description: Authinticate module like register and login users
+ *   description: Tasks api's for the ToDo application
  */
 
 /**
  * @swagger
  * /todo/createTodo:
  *   post:
- *     summary: register new user with his phone number
+ *     summary: create a new task
  *     tags: [Todo]
  *     requestBody:
  *       required: true
@@ -65,9 +65,9 @@ const router = express.Router();
  *
  *     responses:
  *       200:
- *         description: register new user
+ *         description: new task created
  *       404:
- *         description: user is already regestered
+ *         description: the task is not created
  *       500:
  *         description: Some server error
  */
@@ -77,17 +77,17 @@ router.post("/createTodo", createTodo);
  * @swagger
  * /todo/getAllTodo/{userId}:
  *   get:
- *     summary: Getting user profile information
+ *     summary: Getting all tasks
  *     tags: [Todo]
  *     parameters:
  *       - name: userId
- *         description: User Profile Information
+ *         description: User Id
  *         type: string
  *         in: path
  *         required: true
  *     responses:
  *       200:
- *         description: The user profile has been recivied
+ *         description: The Todos has been recieved
  *       500:
  *         description: Some server error
  */
@@ -98,17 +98,17 @@ router.get("/getAllTodo/:userId", getAllTodo);
  * @swagger
  * /todo/getOneTodo/{todoID}:
  *   get:
- *     summary: Getting user profile information
+ *     summary: Getting one todo data
  *     tags: [Todo]
  *     parameters:
  *       - name: todoID
- *         description: User Profile Information
+ *         description: Todo ID
  *         type: string
  *         in: path
  *         required: true
  *     responses:
  *       200:
- *         description: The user profile has been recivied
+ *         description: The todo data has been recieved
  *       500:
  *         description: Some server error
  */
@@ -119,7 +119,7 @@ router.get("/getOneTodo/:todoID", getOneTodo);
  * @swagger
  * /todo/updateTodo:
  *   patch:
- *     summary: register new user with his phone number
+ *     summary: Updating a todo data
  *     tags: [Todo]
  *     requestBody:
  *       required: true
@@ -130,9 +130,9 @@ router.get("/getOneTodo/:todoID", getOneTodo);
  *
  *     responses:
  *       200:
- *         description: register new user
+ *         description: Todo data has been updated
  *       404:
- *         description: user is already regestered
+ *         description: Todo cannot be updated
  *       500:
  *         description: Some server error
  */
@@ -143,17 +143,17 @@ router.patch("/updateTodo", updateTodo);
  * @swagger
  * /todo/deleteTodo/{todoID}:
  *   delete:
- *     summary: Getting user profile information
+ *     summary: Deleting a todo task
  *     tags: [Todo]
  *     parameters:
  *       - name: todoID
- *         description: User Profile Information
+ *         description: Todo id
  *         type: string
  *         in: path
  *         required: true
  *     responses:
  *       200:
- *         description: The user profile has been recivied
+ *         description: The todo has been deleted
  *       500:
  *         description: Some server error
  */
@@ -164,7 +164,7 @@ router.delete("/deleteTodo/:todoID", deleteTodo);
  * @swagger
  * /todo/updateStatusTodo:
  *   patch:
- *     summary: register new user with his phone number
+ *     summary: Update status of a task
  *     tags: [Todo]
  *     requestBody:
  *       required: true
@@ -175,9 +175,9 @@ router.delete("/deleteTodo/:todoID", deleteTodo);
  *
  *     responses:
  *       200:
- *         description: register new user
+ *         description: The status has been updated
  *       404:
- *         description: user is already regestered
+ *         description: Status cannot be updated
  *       500:
  *         description: Some server error
  */
